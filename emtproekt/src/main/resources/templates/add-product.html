@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LADYWEAR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-warning">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">LADYWEAR</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item m-auto">
+                    <a class="nav-link active" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/catalog">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart <span class="sr-only">(current)</span></a>
+                </li>
+
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                           placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <a class="btn btn-success btn-sm ml-3" href="cart.html">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="badge badge-light">3</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<section class="jumbotron text-center">
+    <div class="container">
+
+        <h1 class="jumbotron-heading">Data for new item</h1>
+
+        <div th:if="${param.error}">
+            <h2 class="text-center text-danger" th:text="${param.error}"></h2>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+<!--        <div class="col-md-5">-->
+
+            <form th:action="@{/products}"
+                  enctype="multipart/form-data"
+                  th:method="post" >
+                <input type="text" hidden="hidden" name="id" th:value="${product.getId()}">
+
+                <div class="form-group">
+
+                    <label>ВНЕСИ ИМЕ</label>
+                    <input
+                            type="text"
+                            name="name"
+                            th:value="${product.getName()}"
+
+                            placeholder="Vnesete ime na ladywearot">
+                </div>
+
+                <div class="form-group">
+                    <label>ВНЕСИ ЦЕНА</label>
+                    <input
+                            type="text"
+                            name="price"
+
+                            th:value="${product.getPrice()}"
+                            placeholder="Vnesete cena na ladywearot">
+                </div>
+
+                <div class="form-group">
+                    <label>ВНЕСИ КОЛИЧИНА</label>
+                    <input
+                            type="text"
+                            name="quantity"
+
+                            th:value="${product.getQuantity()}"
+                            placeholder="Vnesete kolichina">
+                </div>
+
+                <div class="form-group">
+                    <label>ОДБЕРИ БРЕНД</label>
+                    <select  name="marka.id" class="form-control">
+                        <option
+                                th:each=" brand : ${brendovi}"
+                                th:value="${brand.getId()}"
+                                th:text="${brand.getName()}"
+                                th:selected="${product.getMarka() != null && product.getMarka().getId() == brand.getId()}"
+                        >
+
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ВНЕСИ СЛИКА</label>
+                    <input name="image" type="file" class="form-control"/>
+                </div>
+
+
+                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                <a type="button" th:href="@{/products}" class="btn btn-sm btn-info">Go Back</a>
+            </form>
+
+<!--        </div>-->
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-black-50">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 copyright mt-3">
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
+
+

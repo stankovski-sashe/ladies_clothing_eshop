@@ -1,0 +1,55 @@
+package com.ladywears.emtproekt.web.controller;
+
+import com.ladywears.emtproekt.model.Ladywear;
+import com.ladywears.emtproekt.service.LadywearService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ladywears.emtproekt.model.Marka;
+import com.ladywears.emtproekt.service.MarkaService;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+import java.io.IOException;
+
+@Controller
+@RequestMapping("/catalog")
+public class CatalogController {
+
+    private final LadywearService ladywearService;
+    private final MarkaService markaService;
+
+    public CatalogController(LadywearService ladywearService, MarkaService markaService) {
+
+        this.ladywearService = ladywearService;
+        this.markaService = markaService;
+    }
+
+    @GetMapping
+    public String listCatalogPage(Model model) {
+
+        List<Marka> marki = this.markaService.findAll();
+        model.addAttribute("siteMarki", marki);
+        model.addAttribute("edenBrand", new Marka());
+
+        List<Ladywear> ladywears = this.ladywearService.findAll();
+        model.addAttribute("products", ladywears);
+
+        return "catalog";
+    }
+
+    @PostMapping
+    public String brandCatalogPage(Marka marka, Model model) {
+        model.addAttribute("edenBrand", marka);
+        List<Ladywear> ladywears = this.ladywearService.findAll();
+        model.addAttribute("products", ladywears);
+        return "cart";
+    }
+
+}
+

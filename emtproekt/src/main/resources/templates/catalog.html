@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LADYWEAR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-warning">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">LADYWEAR</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item m-auto">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/catalog">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart <span class="sr-only">(current)</span></a>
+                </li>
+
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                           placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <a class="btn btn-success btn-sm ml-3" href="cart.html">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="badge badge-light">3</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<section class="jumbotron text-center">
+    <h1 class="jumbotron-heading">CATALOG - Choose your brand!</h1>
+ 
+    <div class="container">
+
+    <div class="container mb-4">
+    <div class="row">
+        <div class="col-12" >
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                <tr >
+
+                <form method="post" th:object="${edenBrand}">
+                    <td >
+						<select  class="form-control selectpicker" th:field="*{name}" >
+							<option
+                                th:each=" xBrand : ${siteMarki}"
+                                th:value="${xBrand.getId()}"
+                                th:text="${xBrand.getName()}">
+
+							</option>
+						</select>
+					</td>
+
+
+                    <td> <button type="submit"  class="btn btn-warning btn-sm" >
+														<b class="fa fa-trash">Одбери бренд</b>
+                         </button>
+                    </td>
+
+                </form>
+
+               </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+    </div>
+</section>
+
+<section class="jumbotron text-center">
+
+    <div class="container">
+
+    <div class="container mb-4">
+    <div class="row">
+        <div class="col-12" th:if="${products.size() > 0}">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Слика</th>
+                        <th scope="col">Шифра</th>
+                        <th scope="col">Акција</th>
+                        <th scope="col">Количина</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Бренд</th>
+
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                <tr th:each="product : ${products}">
+                        <td><img th:src="${product.getBase64Image()}"/></td>
+                        <td th:text="${product.getName()}"></td>
+                        <td th:text="${product.getQuantity() > 0 } ? 'In stock' : 'Out of stock'"></td>
+                        <td th:text="${product.getQuantity()}"></td>
+                        <td th:text="${product.getPrice()}"></td>
+                        <td th:text="${product.getMarka() != null} ?
+                                ${product.getMarka().getName()} :
+                                'No Manufacturer'"></td>
+
+                        <td>
+                            <form >
+                                <button type="submit" class="btn btn-warning btn-sm">Нарачај</button>
+                            </form>
+                        </td>
+               </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-black-50">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 copyright mt-3">
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
+
+
